@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { loginUser } from '../api/authService';
 import Form from './Form';
 import Input from './Input';
+import { translateError } from '../ErrorTranslator';
 
 const schema = yup.object().shape({
     username: yup.string().required('Имя обязательно'),
@@ -30,7 +31,8 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin }) => {
             onLogin(refreshToken);
             navigate('/');
         } catch (err) {
-            alert('Ошибка входа');
+            const readableError = translateError(err);
+            alert(readableError);
         }
     };
 

@@ -6,6 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { registerUser } from '../api/authService';
 import Form from './Form';
 import Input from './Input';
+import { translateError } from '../ErrorTranslator';
 
 const schema = yup.object().shape({
     username: yup.string().required('Имя обязательно'),
@@ -25,7 +26,8 @@ const RegisterForm: React.FC = () => {
             alert('Регистрация успешна!');
             navigate('/');
         } catch (err) {
-            alert('Ошибка регистрации');
+            const readableError = translateError(err);
+            alert(readableError);
         }
     };
 

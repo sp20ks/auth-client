@@ -1,5 +1,6 @@
 import React from 'react';
 import { logoutUser } from '../api/authService';
+import { translateError } from '../ErrorTranslator';
 
 interface LogoutButtonProps {
     refreshToken: string;
@@ -13,7 +14,8 @@ const LogoutButton: React.FC<LogoutButtonProps> = ({ refreshToken, onLogout }) =
             alert('Вы успешно вышли из системы!');
             onLogout();
         } catch (err) {
-            alert('Ошибка выхода');
+            const readableError = translateError(err);
+            alert(readableError);
         }
     };
 
