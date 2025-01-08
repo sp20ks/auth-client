@@ -1,8 +1,9 @@
 import React, { useState } from 'react';
-import { BrowserRouter as Router, Routes, Route, Link } from 'react-router-dom';
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
 import RegisterForm from './components/RegisterForm';
 import LoginForm from './components/LoginForm';
-import LogoutButton from './components/LogoutButton';
+import Layout from './components/Layout';
+import Home from './components/Home';
 
 const App: React.FC = () => {
     const [isLoggedIn, setIsLoggedIn] = useState(false);
@@ -19,31 +20,15 @@ const App: React.FC = () => {
     };
 
     return (
-        <Router>
-            <header>
-                <nav>
-                    <Link to="/">Главная</Link>
-                    {isLoggedIn ? (
-                        <>
-                            <span>Вы в системе</span>
-                            <LogoutButton refreshToken={refreshToken || ''} onLogout={handleLogout} />
-                        </>
-                    ) : (
-                        <>
-                            <Link to="/login">Вход</Link>
-                            <Link to="/register">Регистрация</Link>
-                        </>
-                    )}
-                </nav>
-            </header>
-            <main>
-                <Routes>
-                    <Route path="/" element={<div>Добро пожаловать!</div>} />
-                    <Route path="/register" element={<RegisterForm />} />
-                    <Route path="/login" element={<LoginForm onLogin={handleLogin} />} />
-                </Routes>
-            </main>
-        </Router>
+        <BrowserRouter>
+          <Routes>
+            <Route path='/' element={<Layout isLoggedIn={isLoggedIn} refreshToken={refreshToken} handleLogout={handleLogout} />}>
+              <Route index element={<Home />} />
+              <Route path='/register' element={<RegisterForm />} />
+              <Route path='/login' element={<LoginForm onLogin={handleLogin} />} />
+            </Route>
+          </Routes>
+        </BrowserRouter>
     );
 };
 

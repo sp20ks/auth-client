@@ -35,9 +35,9 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin }) => {
     };
 
     return (
-        <Form onSubmit={onSubmit} handleSubmit={handleSubmit} register={register} buttonLabel="Войти">
-            <Input name="username" label="Имя" error={errors.username?.message} register={register} />
-            <Input type="password" name="password" label="Пароль" error={errors.password?.message} register={register} />
+        <Form onSubmit={onSubmit} handleSubmit={handleSubmit} register={register} buttonLabel='Войти'>
+            <Input name='username' label='Имя' error={errors.username?.message} register={register} />
+            <Input type='password' name='password' label='Пароль' error={errors.password?.message} register={register} />
         </Form>
     );
 };

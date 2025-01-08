@@ -30,10 +30,10 @@ const RegisterForm: React.FC = () => {
     };
 
     return (
-        <Form onSubmit={onSubmit} handleSubmit={handleSubmit} register={register} buttonLabel="Регистрация">
-            <Input name="username" label="Имя" error={errors.username?.message} register={register} />
-            <Input name="email" label="Email" error={errors.email?.message} register={register} />
-            <Input type="password" name="password" label="Пароль" error={errors.password?.message} register={register} />
+        <Form onSubmit={onSubmit} handleSubmit={handleSubmit} register={register} buttonLabel='Регистрация'>
+            <Input name='username' label='Имя' error={errors.username?.message} register={register} />
+            <Input name='email' label='Email' error={errors.email?.message} register={register} />
+            <Input type='password' name='password' label='Пароль' error={errors.password?.message} register={register} />
         </Form>
     );
 };
