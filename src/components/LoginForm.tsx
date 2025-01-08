@@ -1,8 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { loginUser } from '../api/authService';
+import Form from './Form';
+import Input from './Input';
 
 const schema = yup.object().shape({
     username: yup.string().required('Имя обязательно'),
@@ -17,34 +20,25 @@ const LoginForm: React.FC<LoginProps> = ({ onLogin }) => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    const navigate = useNavigate();
 
     const onSubmit = async (data: any) => {
         try {
-            loginUser(data).then((resp) => {
-                const refreshToken = resp.data.refresh_token;
-                console.log(refreshToken);
-                alert('Вход успешен!');
-                onLogin(refreshToken);
-            });
+            const resp = await loginUser(data);
+            const refreshToken = resp.data.refresh_token;
+            alert('Вход успешен!');
+            onLogin(refreshToken);
+            navigate('/');
         } catch (err) {
             alert('Ошибка входа');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label>Username:</label>
-                <input {...register('username')} />
-                <p>{errors.username?.message}</p>
-            </div>
-            <div>
-                <label>Пароль:</label>
-                <input type="password" {...register('password')} />
-                <p>{errors.password?.message}</p>
-            </div>
-            <button type="submit">Войти</button>
-        </form>
+        <Form onSubmit={onSubmit} handleSubmit={handleSubmit} register={register} buttonLabel="Войти">
+            <Input name="username" label="Имя" error={errors.username?.message} register={register} />
+            <Input type="password" name="password" label="Пароль" error={errors.password?.message} register={register} />
+        </Form>
     );
 };
 

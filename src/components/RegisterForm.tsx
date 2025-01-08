@@ -1,8 +1,11 @@
 import React from 'react';
 import { useForm } from 'react-hook-form';
+import { useNavigate } from 'react-router-dom';
 import * as yup from 'yup';
 import { yupResolver } from '@hookform/resolvers/yup';
 import { registerUser } from '../api/authService';
+import Form from './Form';
+import Input from './Input';
 
 const schema = yup.object().shape({
     username: yup.string().required('Имя обязательно'),
@@ -14,35 +17,24 @@ const RegisterForm: React.FC = () => {
     const { register, handleSubmit, formState: { errors } } = useForm({
         resolver: yupResolver(schema),
     });
+    const navigate = useNavigate();
 
     const onSubmit = async (data: any) => {
         try {
             await registerUser(data);
             alert('Регистрация успешна!');
+            navigate('/');
         } catch (err) {
             alert('Ошибка регистрации');
         }
     };
 
     return (
-        <form onSubmit={handleSubmit(onSubmit)}>
-            <div>
-                <label>Имя:</label>
-                <input {...register('username')} />
-                <p>{errors.username?.message}</p>
-            </div>
-            <div>
-                <label>Email:</label>
-                <input {...register('email')} />
-                <p>{errors.email?.message}</p>
-            </div>
-            <div>
-                <label>Пароль:</label>
-                <input type="password" {...register('password')} />
-                <p>{errors.password?.message}</p>
-            </div>
-            <button type="submit">Регистрация</button>
-        </form>
+        <Form onSubmit={onSubmit} handleSubmit={handleSubmit} register={register} buttonLabel="Регистрация">
+            <Input name="username" label="Имя" error={errors.username?.message} register={register} />
+            <Input name="email" label="Email" error={errors.email?.message} register={register} />
+            <Input type="password" name="password" label="Пароль" error={errors.password?.message} register={register} />
+        </Form>
     );
 };
 
