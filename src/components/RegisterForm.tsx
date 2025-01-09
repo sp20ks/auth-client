@@ -6,7 +6,7 @@ import { yupResolver } from '@hookform/resolvers/yup';
 import { registerUser } from '../api/authService';
 import Form from './Form';
 import Input from './Input';
-import { translateError } from '../ErrorTranslator';
+import { translateError } from '../errorTranslator';
 
 const schema = yup.object().shape({
     username: yup.string().required('Имя обязательно'),

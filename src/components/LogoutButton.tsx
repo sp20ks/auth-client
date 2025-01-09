@@ -1,6 +1,6 @@
 import React from 'react';
 import { logoutUser } from '../api/authService';
-import { translateError } from '../ErrorTranslator';
+import { translateError } from '../errorTranslator';
 
 interface LogoutButtonProps {
     refreshToken: string;

@@ -10,24 +10,24 @@ interface LayoutProps {
 
 const Layout: React.FC<LayoutProps> = ({ isLoggedIn, refreshToken, handleLogout }) => {
   return (
-    <div>
-      <header>
-        <nav>
-          <Link to='/'>Главная</Link>
+    <div className="layout">
+      <header className="header">
+        <nav className="nav">
+          <Link to="/" className="nav__link">Главная</Link>
           {isLoggedIn ? (
-            <>
-              <span>Вы в системе</span>
+            <div className="nav__actions">
+              <span className="nav__status">Вы в системе</span>
               <LogoutButton refreshToken={refreshToken || ''} onLogout={handleLogout} />
-            </>
+            </div>
           ) : (
-            <>
-              <Link to='/login'>Вход</Link>
-              <Link to='/register'>Регистрация</Link>
-            </>
+            <div className="nav__actions">
+              <Link to="/login" className="nav__link">Вход</Link>
+              <Link to="/register" className="nav__link">Регистрация</Link>
+            </div>
           )}
         </nav>
       </header>
-      <main>
+      <main className="main-content">
         <Outlet />
       </main>
     </div>
